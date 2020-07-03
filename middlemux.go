@@ -24,6 +24,11 @@ func NewMiddleMux() *MiddleMux {
 // MiddleMux. The last piece of middleware registered is the first to be invoked
 // on calls to ServeHTTP.
 func (mm *MiddleMux) Use(m Middleware) {
+	// If the provided func is nil, ignore this.
+	if m == nil {
+		return
+	}
+
 	mm.handlerFn = m(mm.handlerFn)
 }
 
